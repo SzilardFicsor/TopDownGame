@@ -20,7 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         ProcessInputs();
-        Debug.Log(_mousePosition);
+       
     }
     private void FixedUpdate()
     {
