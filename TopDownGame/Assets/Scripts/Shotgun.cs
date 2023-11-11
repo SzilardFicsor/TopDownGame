@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour
+public class Shotgun : Weapon
 {
-    // Start is called before the first frame update
+    public PlayerBehaviour Player;
+    private Rigidbody rb;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+           
     }
-
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(0, 0, 50 * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Player = collision.gameObject.GetComponent<PlayerBehaviour>();
+            if(Player.CurrentWeapon ==null)
+            {
+                PickUp();
+                transform.SetParent(Player.WeaponPosition);
+
+                
+            }                   
+        }
     }
 }

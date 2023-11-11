@@ -12,6 +12,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector2 _lookDirection;
     private Camera _camera;
     private bool _hasGun = false;
+    public Weapon CurrentWeapon;
+    public Transform WeaponPosition;
 
     private Animator _animator;
     void Start()
@@ -25,6 +27,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         ProcessInputs();
         AnimationHandeler();
+        CurrentWeapon= GetComponent<Weapon>();
     }
     private void FixedUpdate()
     {
