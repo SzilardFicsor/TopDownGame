@@ -15,9 +15,6 @@ public class Weapon : MonoBehaviour
     }
     public void PickUp()
     {
-        SpriteRenderer renderer;
-        renderer = GetComponent<SpriteRenderer>();
-        renderer.enabled= false;
 
 
     }

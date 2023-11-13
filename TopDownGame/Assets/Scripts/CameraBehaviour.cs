@@ -47,6 +47,7 @@ public class CameraBehaviour : MonoBehaviour
     {
         _elapsedTime = Time.fixedDeltaTime;
         float percentage = _elapsedTime / 0.25f;
+        
         if (Input.GetKey(KeyCode.LeftShift))
         {
             transform.position = Vector3.Lerp(transform.position, LookAhead(), percentage);

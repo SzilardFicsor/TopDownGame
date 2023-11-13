@@ -12,11 +12,15 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector2 _lookDirection;
     private Camera _camera;
     private bool _hasGun = false;
-    public Weapon CurrentWeapon;
+    public GameObject CurrentWeapon;
     public Transform WeaponPosition;
 
+    private float _throwForce = 20;
+    //private bool _hasWeapon = false;
+    //public SpriteRenderer WeaponRenderer;
+
     private Animator _animator;
-    void Start()
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
@@ -27,7 +31,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         ProcessInputs();
         AnimationHandeler();
-        CurrentWeapon= GetComponent<Weapon>();
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.gameObject.transform.position = WeaponPosition.transform.position;
+            CurrentWeapon.gameObject.transform.rotation = WeaponPosition.transform.rotation;
+            //if (Input.GetMouseButtonDown(1))
+            //{
+            //    ThrowWeapon();
+            //}                          
+        }
     }
     private void FixedUpdate()
     {
@@ -43,6 +55,17 @@ public class PlayerBehaviour : MonoBehaviour
 
         _mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         _lookDirection = _mousePosition - transform.position;
+    }
+    public void ThrowWeapon()
+    {
+
+        Vector2 direction = WeaponPosition.position - transform.position;
+        direction = direction.normalized;
+
+        CurrentWeapon.GetComponent<Shotgun>().rb.AddForce(direction * _throwForce, ForceMode2D.Impulse);
+        Debug.Log("THROW");
+        CurrentWeapon = null;
+
     }
     private void Move()
     {
@@ -66,12 +89,12 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(1) && !_hasGun)
+        if (Input.GetKeyDown(KeyCode.E) && !_hasGun)
         {
             _animator.SetBool("IsHoldingGun", true);
             _hasGun = true;
         }
-        else if (Input.GetMouseButtonDown(1) && _hasGun)
+        else if (Input.GetKeyDown(KeyCode.E) && _hasGun)
         {
             _animator.SetBool("IsHoldingGun", false);
             _hasGun = false;
