@@ -62,7 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
         Vector2 direction = WeaponPosition.position - transform.position;
         direction = direction.normalized;
 
-        CurrentWeapon.GetComponent<Shotgun>().rb.AddForce(direction * _throwForce, ForceMode2D.Impulse);
+        CurrentWeapon.GetComponent<Weapon>().rb.AddForce(direction * _throwForce, ForceMode2D.Impulse);
         Debug.Log("THROW");
         CurrentWeapon = null;
 
