@@ -4,33 +4,24 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public PlayerBehaviour Player;
-    public Rigidbody2D rb;
-    private SpriteRenderer _renderer;
-    private bool canThrow = false;
-    private BoxCollider2D _collider;
+    public PlayerBehaviour Player { get; set; }
+    public Rigidbody2D rb { get; set; }
+    public SpriteRenderer _renderer { get; set; }
+    public bool canThrow { get; set; }
+    public BoxCollider2D _collider { get; set; }
 
+    public Weapon(Rigidbody2D rigidbody, SpriteRenderer renderer, BoxCollider2D collider)
+    {
+        rb = rigidbody;
+        _renderer = renderer;
+        _collider = collider;
+
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
-        _collider= GetComponent<BoxCollider2D>();
-    }
-    void Update()
-    {
-        if (_renderer.enabled == true)
-        {
-            IdleRotate();
-        }
-        if (Input.GetMouseButtonDown(1) && canThrow && Player.CurrentWeapon != null)
-        {
-            Throw();
-            canThrow= false;
-            _collider.enabled = true;
-            _renderer.enabled = true;
-        }
-
-
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -38,7 +29,7 @@ public class Weapon : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Player = collision.gameObject.GetComponent<PlayerBehaviour>();
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) && Player.CurrentWeapon == null)
             {
                 PickUp();
                 _collider.enabled= false;
@@ -58,7 +49,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void IdleRotate()
+    public void IdleRotate()
     {
         if (rb.velocity == Vector2.zero)
         {
@@ -66,10 +57,10 @@ public class Weapon : MonoBehaviour
         }
         else if (rb.velocity != Vector2.zero)
         {
-            transform.Rotate(0, 0, 500 * Time.deltaTime);
+            transform.Rotate(0, 0, 700 * Time.deltaTime);
         }
     }
-    private void Throw()
+    public void Throw()
     {
         Player.ThrowWeapon();
 
@@ -81,5 +72,9 @@ public class Weapon : MonoBehaviour
             Player.CurrentWeapon = this.gameObject;
             Debug.Log("PICKUP");
         }
+    }
+    public virtual void Attack()
+    {
+
     }
 }

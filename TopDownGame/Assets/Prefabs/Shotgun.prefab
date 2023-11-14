@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4913925090042777193}
   - component: {fileID: 8253120476611465283}
-  - component: {fileID: 8228284223526430350}
   - component: {fileID: 6577788902783892682}
+  - component: {fileID: 6301602741394536632}
   - component: {fileID: 8849835054223322581}
   m_Layer: 0
   m_Name: Shotgun
@@ -87,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8228284223526430350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3177662028993632450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b46e2568b0451541b409e5746d97488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  rb: {fileID: 0}
 --- !u!61 &6577788902783892682
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -133,7 +119,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010979891, y: -0.0988259}
+  m_Offset: {x: -0.010094345, y: -0.10484712}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.49886218, y: 0.76881725}
@@ -144,8 +130,20 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.1382213, y: 0.6619102}
+  m_Size: {x: 1.241059, y: 0.43912485}
   m_EdgeRadius: 0
+--- !u!114 &6301602741394536632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3177662028993632450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219f6e083cb9a624f84661665c0599bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &8849835054223322581
 Rigidbody2D:
   serializedVersion: 4
@@ -170,6 +168,6 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 2
   m_CollisionDetection: 0
   m_Constraints: 0
