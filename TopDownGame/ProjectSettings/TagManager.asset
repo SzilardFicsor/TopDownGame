@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - Bullet
+  - Enemy
+  - Weapon
+  - Melee
   layers:
   - Default
   - TransparentFX

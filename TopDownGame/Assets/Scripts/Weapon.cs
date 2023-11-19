@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,14 @@ public class Weapon : MonoBehaviour
     public SpriteRenderer _renderer { get; set; }
     public bool canThrow { get; set; }
     public BoxCollider2D _collider { get; set; }
+    public Type WeaponType { get; set; }
 
-    public Weapon(Rigidbody2D rigidbody, SpriteRenderer renderer, BoxCollider2D collider)
+    public Weapon(Rigidbody2D rigidbody, SpriteRenderer renderer, BoxCollider2D collider, Type type)
     {
         rb = rigidbody;
         _renderer = renderer;
         _collider = collider;
+        WeaponType = type;
 
     }
     void Start()
@@ -43,7 +46,7 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //rb.velocity = Vector3.zero;
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy")
         {
             rb.velocity = Vector3.zero;
         }
@@ -54,6 +57,7 @@ public class Weapon : MonoBehaviour
         if (rb.velocity == Vector2.zero)
         {
             transform.Rotate(0, 0, 50 * Time.deltaTime);
+            
         }
         else if (rb.velocity != Vector2.zero)
         {

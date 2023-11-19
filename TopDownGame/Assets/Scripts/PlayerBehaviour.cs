@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -12,6 +13,9 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector2 _lookDirection;
     private Camera _camera;
     private bool _hasGun = false;
+    public bool _hasMelee = false;
+    public bool ShootOnce = false;
+    public bool SwingOnce = false;
     public GameObject CurrentWeapon;
     public Transform WeaponPosition;
 
@@ -25,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _camera = Camera.main;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -35,11 +40,32 @@ public class PlayerBehaviour : MonoBehaviour
         {
             CurrentWeapon.gameObject.transform.position = WeaponPosition.transform.position;
             CurrentWeapon.gameObject.transform.rotation = WeaponPosition.transform.rotation;
-            //if (Input.GetMouseButtonDown(1))
-            //{
-            //    ThrowWeapon();
-            //}                          
+            if(CurrentWeapon.tag == "Weapon")
+            {
+                _hasGun = true;
+            }
+            if(CurrentWeapon.tag == "Melee")
+            {
+                _hasMelee = true;
+            }
         }
+        else
+        {
+            _hasGun = false;
+            _hasMelee= false;
+        }
+        if(Input.GetMouseButtonDown(0) && CurrentWeapon != null && CurrentWeapon.tag == "Weapon")
+        {
+            CurrentWeapon.GetComponent<Weapon>().Attack();
+            ShootOnce= true;
+        }
+
+        if (Input.GetMouseButtonDown(0) && CurrentWeapon != null && CurrentWeapon.tag == "Melee")
+        {
+            CurrentWeapon.GetComponent<Weapon>().Attack();
+            SwingOnce = true;
+        }
+
     }
     private void FixedUpdate()
     {
@@ -65,6 +91,8 @@ public class PlayerBehaviour : MonoBehaviour
         CurrentWeapon.GetComponent<Weapon>().rb.AddForce(direction * _throwForce, ForceMode2D.Impulse);
         Debug.Log("THROW");
         CurrentWeapon = null;
+        ShootOnce = false;
+        SwingOnce= false;
 
     }
     private void Move()
@@ -89,15 +117,40 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E) && !_hasGun)
-        {
-            _animator.SetBool("IsHoldingGun", true);
-            _hasGun = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.E) && _hasGun)
+        if (!_hasGun)
         {
             _animator.SetBool("IsHoldingGun", false);
-            _hasGun = false;
+        }
+        else if (_hasGun)
+        {
+            _animator.SetBool("IsHoldingGun", true);
+        }
+
+        if (!_hasMelee)
+        {
+            _animator.SetBool("IsHoldingMelee", false);
+        }
+        else if (_hasMelee)
+        {
+            _animator.SetBool("IsHoldingMelee", true);
+        }
+
+        if (ShootOnce)
+        {
+            _animator.SetBool("ShootOnce", true);
+        }
+        if (!ShootOnce)
+        {
+            _animator.SetBool("ShootOnce", false);
+        }
+
+        if (SwingOnce)
+        {
+            _animator.SetBool("SwingOnce", true);
+        }
+        if (!SwingOnce)
+        {
+            _animator.SetBool("SwingOnce", false);
         }
     }
 }
